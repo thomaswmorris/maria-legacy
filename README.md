@@ -4,7 +4,8 @@
 
 
 
-# Modeling Auto-Regressive Integrated Atmosphere (maria) [![name](https://img.shields.io/pypi/v/maria.svg)](https://pypi.python.org/pypi/maria) [![name](https://img.shields.io/travis/tomachito/maria.svg)](https://travis-ci.org/tomachito/maria)
+# Modeling Auto-Regressive Integrated Atmosphere (maria) 
+[![name](https://img.shields.io/pypi/v/maria.svg)](https://pypi.python.org/pypi/maria) [![name](https://img.shields.io/travis/tomachito/maria.svg)](https://travis-ci.org/tomachito/maria)
 
 maria is a python-based package that simulates turbulent atmospheric emission using a auto-regressive gaussian process framework, for applications in observational astronomy. Below: a distribution of turbulent water vapor moves through the field of view of the observer. 
 
