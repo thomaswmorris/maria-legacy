@@ -1,18 +1,9 @@
-=====
-maria
-=====
-
-.. image:: https://img.shields.io/travis/tomachito/maria.svg
-        :target: https://travis-ci.org/tomachito/maria
-
-.. image:: https://img.shields.io/pypi/v/maria.svg
-        :target: https://pypi.python.org/pypi/maria
+[![name](https://img.shields.io/travis/tomachito/maria.svg)](https://travis-ci.org/tomachito/maria)
 
 
-Atmospheric simulation
+[![name](https://img.shields.io/pypi/v/maria.svg)](https://pypi.python.org/pypi/maria)
 
-* Free software: 3-clause BSD license
-* Documentation: (COMING SOON!) https://tomachito.github.io/maria.
+
 # Modeling Auto-Regressive Integrated Atmosphere (maria)
 
 maria is a python-based package that simulates turbulent atmospheric emission using a auto-regressive gaussian process framework, for applications in observational astronomy. Below: a distribution of turbulent water vapor moves through the field of view of the observer. 
@@ -27,7 +18,7 @@ maria simulates layers of turbulent atmospheric emission according to a statisti
 
 ## Methodology
 
-maria auto-regressively simulates an multi-layeed two-dimensional "integrated" atmospheric model that is much cheaper to compute than a three-dimensional model, which can effectively describe time-evolving atmospheric emission. maria can thus effectively simulate correlated atmospheric emission for in excess of 100,000 detectors observing the sky concurrently, at resolutions as fine as one arcminute. 
+maria auto-regressively simulates an multi-layeed two-dimensional "integrated" atmospheric model that is much cheaper to compute than a three-dimensional model, which can effectively describe time-evolving atmospheric emission. maria can thus effectively simulate correlated atmospheric emission for in excess of 100,000 detectors observing the sky concurrently, at resolutions as fine as one arcminute. The atmospheric model used is detailed [here](https://arxiv.org/abs/2111.01319).
 
 ## Examples and Usage 
 
