@@ -41,7 +41,7 @@ setup(
     long_description=readme,
     author="Thomas Morris",
     author_email='thomasmorris@princeton.edu',
-    url='https://github.com/tomachito/maria',
+    url='https://github.com/thomaswmorris/maria',
     python_requires='>={}'.format('.'.join(str(n) for n in min_version)),
     packages=find_packages(exclude=['docs', 'tests']),
     entry_points={
