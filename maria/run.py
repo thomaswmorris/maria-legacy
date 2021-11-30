@@ -6,10 +6,10 @@ from datetime import timezone
 import maria
 
         
-atmosphere_config = {'n_layers'   : 4,         # how many layers to simulate, based on the integrated atmospheric model 
-                    'min_depth'   : 50,      # the height of the first layer 
+atmosphere_config = {'n_layers'   : 32,         # how many layers to simulate, based on the integrated atmospheric model 
+                    'min_depth'   : 100,      # the height of the first layer 
                     'max_depth'   : 3000,      # 
-                    'rel_atm_rms' : 1e-1,  
+                    'rel_atm_rms' : 5e-1,  
                     'outer_scale' : 500}
 
 
@@ -22,7 +22,7 @@ pointing_config = {'scan_type' : 'lissajous_box',
 pointing_config = {'scan_type' : 'CES',
                     'duration' : 60, 'samp_freq' : 20,
                  'center_azim' : 55, 'center_elev' : 45, 
-                    'az_throw' : 15, 'az_speed' : 1.5}
+                    'az_throw' : 15, 'az_speed' : 1}
 
 
 n_per = 128
@@ -142,18 +142,20 @@ exec(open('/Users/thomas/Desktop/atmosphere/mpl_defs').read())
 do_clouds = True
 
 if do_clouds:
+    
+    i = 0
 
     fig,ax = plt.subplots(1,1,figsize=(8,8))
 
-    ax.pcolormesh(np.degrees(tm.X[-1]),
-                  np.degrees(tm.Y[-1]),
-                  tm.vals[-1],shading='none',cmap='RdBu_r')
+    ax.pcolormesh(np.degrees(tm.X[i]),
+                  np.degrees(tm.Y[i]),
+                  tm.vals[i],shading='none',cmap='RdBu_r')
     
-    ax.scatter(np.degrees(np.real(tm.pointing.theta_edge_z[-1]).T),
-               np.degrees(np.imag(tm.pointing.theta_edge_z[-1]).T),s=1e-1,c='k')
+    ax.scatter(np.degrees(np.real(tm.pointing.theta_edge_z[i]).T),
+               np.degrees(np.imag(tm.pointing.theta_edge_z[i]).T),s=1e-1,c='k')
     
-    ax.plot(np.degrees(np.real(tm.pointing.focal_theta_z[-1])),
-            np.degrees(np.imag(tm.pointing.focal_theta_z[-1])),c='k')
+    ax.plot(np.degrees(np.real(tm.pointing.focal_theta_z[i])),
+            np.degrees(np.imag(tm.pointing.focal_theta_z[i])),c='k')
     
     equalize(ax)
 

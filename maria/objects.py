@@ -22,7 +22,7 @@ print('local objects')
 
 
 
-default_atmosphere_config = {'n_layers'                       : 4,         # how many layers to simulate, based on the integrated atmospheric model 
+default_atmosphere_config = {'n_layers'                       : 16,         # how many layers to simulate, based on the integrated atmospheric model 
                                   'min_depth'                 : 50,      # the height of the first layer 
                                   'max_depth'                 : 5000,      # 
                                   'rel_atm_rms'               : 1e-1,  
@@ -47,7 +47,7 @@ default_beams_config = {'optical_type' : 'diff_lim',
                         'min_beam_res' : .5 }     
      
 default_pointing_config = {'scan_type' : 'CES',
-                           'duration'  : 10,'samp_freq' : 20,
+                           'duration'  : 600,'samp_freq' : 20,
                          'center_azim' : 0, 'center_elev'  : 90, 
                             'az_throw' : 0, 'az_speed' : 1.5,
                             'el_throw' : 0, 'el_speed' : 1.5}
@@ -91,7 +91,9 @@ class atmosphere():
                 self.config[arg] = default_atmosphere_config[arg]
             use_auto_depths = True
         if use_auto_depths:  
-            self.depths = np.linspace(self.config['min_depth'], self.config['max_depth'], self.config['n_layers'])
+            #self.depths = np.linspace(self.config['min_depth'], self.config['max_depth'], self.config['n_layers'])
+            self.depths = np.geomspace(self.config['min_depth'], self.config['max_depth'], self.config['n_layers'])
+            self.thicks = np.gradient(self.depths)
             
             #raise Exception('Could not build atmospheric layers. Please specify the \'min_depth\', \'max_depth\', and \'n_layers\' parameters, or else enter an array of heights.')
         

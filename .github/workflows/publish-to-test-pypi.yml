@@ -1,0 +1,33 @@
+# This workflows will upload a Python Package using flit when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+name: Publish To Test-PyPi
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install wheel twine setuptools
+    - name: Build and publish
+      env:
+        TWINE_USERNAME: tomachito
+        # The PYPI_PASSWORD must be a pypi token with the "pypi-" prefix with sufficient permissions to upload this package
+        # https://pypi.org/help/#apitoken
+        TWINE_PASSWORD: pypi-AgENdGVzdC5weXBpLm9yZwIkMzNhYjk0ODktZmI1My00YzBkLWEzNmYtMjY3OTZlMTQxZGEzAAI2eyJwZXJtaXNzaW9ucyI6IHsicHJvamVjdHMiOiBbIm1hcmlhIl19LCAidmVyc2lvbiI6IDF9AAAGIFaQbVmc8jCl9cHcrx6UDwN9wqMxlFSVbORaI4fRnp57
+      run: |
+        python setup.py sdist bdist_wheel
+        twine upload --repository testpypi dist/*
