@@ -8,7 +8,7 @@ import pickle
 from scipy import signal,stats
 from datetime import datetime
 from datetime import timezone
-from maria import tools
+from . import tools
 #import tools
 
 from importlib import resources
@@ -16,14 +16,14 @@ from importlib import resources
 import weathergen
 
 
-print('local objects')
+#print('local objects')
 
 # an array object describes the array of detectors. all of the arguments are dimensionful arrays of the same length 
 
 
 
 default_atmosphere_config = {'n_layers'                       : 16,         # how many layers to simulate, based on the integrated atmospheric model 
-                                  'min_depth'                 : 50,      # the height of the first layer 
+                                  'min_depth'                 : 100,      # the height of the first layer 
                                   'max_depth'                 : 5000,      # 
                                   'rel_atm_rms'               : 1e-1,  
                                   'turbulence_model'          : 'scale_invariant',
@@ -36,7 +36,7 @@ default_site_config = {'site' : 'ACT',
 
 
 default_array_config = {'shape' : 'hex',
-                            'n' : 600,       # maximum number of detectors
+                            'n' : 271,       # maximum number of detectors
                           'fov' : 10,
                     'nom_bands' : 1.5e11,
                   'white_noise' : 0}         # maximum span of array
@@ -47,7 +47,7 @@ default_beams_config = {'optical_type' : 'diff_lim',
                         'min_beam_res' : .5 }     
      
 default_pointing_config = {'scan_type' : 'CES',
-                           'duration'  : 600,'samp_freq' : 20,
+                           'duration'  : 10,'samp_freq' : 20,
                          'center_azim' : 0, 'center_elev'  : 90, 
                             'az_throw' : 0, 'az_speed' : 1.5,
                             'el_throw' : 0, 'el_speed' : 1.5}
@@ -65,14 +65,10 @@ class atmosphere():
     def __init__(self, config=None):
         
         if config==None:
-            print('No atm config specified, using default layers.')
+            print('No atm config specified, using 16 geometrically-spaced layers.')
             self.config = default_atmosphere_config.copy()
         else:
             self.config = config.copy()
-        
-        if self.config==None:
-            print('No site config specified, using the ACT site.')
-            self.config = default_site_config
         
         use_auto_depths   = np.all(np.isin(['min_depth','max_depth','n_layers'],list(self.config)))
         use_manual_depths = np.all(np.isin(['depths'],list(self.config)))
@@ -115,7 +111,7 @@ class site():
     def __init__(self, config=None):
         
         if config==None:
-            print('No site specified, using the ACT site.')
+            print('No site config specified, defaulting to Cerro Toco.')
             self.config = default_site_config.copy()
         else:
             self.config = config.copy()
@@ -167,8 +163,7 @@ class site():
             self.weather = weathergen.generate(region=self.region,
                                                time=self.timestamp,
                                                method=self.config['weather_gen_method'])
-            
-            print(self.weather['water_density'][0])
+        
             
         if 'pwv' in list(self.config):
             
@@ -179,7 +174,7 @@ class array():
     def __init__(self, config=None):
        
         if config==None:
-            print('No array specified, using the ACT array.')
+            print('No array config specified, defaulting to a 271-detector hexagonal array.')
             self.config = default_array_config.copy()
         else:
             self.config = config.copy()
@@ -259,7 +254,7 @@ class pointing():
     def __init__(self, config=None):
         
         if config==None:
-            print('No pointing specified, defaulting to a 10-minute zenith stare at 20 Hz.')
+            print('No pointing config specified, defaulting to a 10-second zenith stare at 20 Hz.')
             self.config = default_pointing_config
         else:
             self.config = config.copy()
@@ -313,7 +308,7 @@ class beams():
      def __init__(self, config=None):
         
         if config==None:
-            print('No beams specified, defaulting to ACT beams.')
+            print('No beam config specified, defaulting to a 5-meter diffraction-limited beam.')
             self.config = default_beams_config
         else:
             self.config = config.copy()

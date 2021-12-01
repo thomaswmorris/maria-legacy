@@ -8,8 +8,8 @@ import warnings
 
 
 from tqdm import tqdm
-from maria import tools
-from maria import objects
+from . import tools
+from . import objects
 
 #import tools
 #import objects
@@ -315,8 +315,6 @@ class model():
             #self.los_wv /= np.sin(self.pointing.elev)
             atm_temp_data = np.zeros((self.array.n,self.pointing.nt))
             
-            print('@(*&^$(@#*&%^(@#*&$%^(#@&%^(@')
-            
             for i_ba, (nom_band,f_ps,ps) in enumerate(zip(self.array.nom_band_list,
                                                           self.array.band_freq_list,
                                                           self.array.band_pass_list)):
@@ -326,10 +324,10 @@ class model():
                 min_elev, max_elev = self.pointing.elev[bm].min(), self.pointing.elev[bm].max()
                 min_epwv, max_epwv = self.epwv[bm].min(), self.epwv[bm].max()
                 
-                i_min_elev = np.where(self.atmosphere.spectra_dict['elev']<min_elev)[0][-1]
-                i_max_elev = np.where(self.atmosphere.spectra_dict['elev']>max_elev)[0][0] + 1
-                i_min_epwv = np.where(self.atmosphere.spectra_dict['epwv']<min_epwv)[0][-1]
-                i_max_epwv = np.where(self.atmosphere.spectra_dict['epwv']>max_epwv)[0][0] + 1
+                i_min_elev = np.where(self.atmosphere.spectra_dict['elev']<=min_elev)[0][-1]
+                i_max_elev = np.where(self.atmosphere.spectra_dict['elev']>=max_elev)[0][0] + 1
+                i_min_epwv = np.where(self.atmosphere.spectra_dict['epwv']<=min_epwv)[0][-1]
+                i_max_epwv = np.where(self.atmosphere.spectra_dict['epwv']>=max_epwv)[0][0] + 1
                 
                 gridded_temp = 1e3 * tools.get_brightness_temperature(f_ps, ps, self.atmosphere.spectra_dict['freq'], self.atmosphere.spectra_dict['temp'])
                 
